@@ -1,144 +1,158 @@
 # README
 
-# 🌱 Semi-Supervised Learning for Hyperspectral Data
+# 🌱 GreenHySpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
 
-This repository contains a collection of training scripts and experiments for semi-supervised learning on hyperspectral reflectance data. It includes implementations of various models such as MAE (Masked Autoencoders), GANs, Autoencoders (AE-RTM), and a Multi-trait learning framework.
+This repository provides training scripts and baseline experiments for semi-supervised learning on hyperspectral reflectance data. Implemented methods include:
 
-The aim is to evaluate and compare different semi-supervised strategies on spectral datasets. All training scripts are located in the `scripts/` directory and are meant to be executed via command-line with custom arguments.
+- Masked Autoencoders (MAE)
+- Generative Adversarial Networks (SR-GAN)
+- Autoencoders with Radiative Transfer Models (RTM-AE)
+- Supervised Multi-trait learning framework
 
-## 📁 Project Structure
+The goal is to benchmark various semi-supervised learning (SSL) strategies for vegetation trait prediction using hyperspectral data.
+
+---
+
+## 📂 Dataset
+
+Dataset available at:  
+👉 [Hugging Face – GreenHySpectra](https://huggingface.co/datasets/Avatarr05/GreenHySpectra)
+
+Place the downloaded dataset under `Datasets/`.
+
+---
+
+## ⚙️ Requirements
+
+Tested on:  
+- Python 3.8.2  
+- PyTorch 1.8.1+cu111  
+
+To set up the environment:
+
+```bash
+conda create -n greenhyspectra python=3.8.2
+conda activate greenhyspectra
+pip install -r requirements.txt
+```
+
+---
+
+## 🗂️ Repository Structure
 
 ```
-.
-├── scripts/
-│   ├── mae_Reg_main_unlabeled.py
-│   ├── Gan_main_unlabeled.py
-│   ├── AE_RTM_main.py
-│   ├── AE_RTM_main_unlabeled.py
-│   └── multi_main.py
-    └── Split_data.py
-├── Datasets/
-├── Splits/
+HyspecSSL/
+├── Datasets/              # Contains labeled and unlabeled hyperspectral data
+├── notebooks/             # Evaluation and visualization notebooks
+├── scripts/               # Training scripts for all models
+├── Splits/                # Contains train/test splits of unlabeled data
+├── src/                   # Supporting modules/utilities
 ├── README.md
 └── requirements.txt
 ```
 
-## 🥪 Requirements
+### `scripts/` includes:
 
-- Python 3.8+
-- PyTorch
-- NumPy
-- Pandas
-- wandb (optional for experiment tracking)
+- **(a) Sensitivity Analysis**:  
+  `*_variation_UnLb.py`, `*_variation_Lb.py`, etc.
 
-To install the dependencies:
+- **(b) Full-range Trait Prediction**:  
+  `Gan_main_unlabeled.py`, `AE_RTM_main_unlabeled.py`, `multi_main.py`
 
+- **(c) Half-range Trait Prediction**:  
+  Same as above with `--type_s 'half'`
+
+- **(d) Out-of-Distribution (OOD) Evaluation**:  
+  `*_main_unlabeled_TransCV.py`, `multi_main_Trans.py`
+
+- **(e) MAE Ablation Studies**:  
+  `MAE_grid_search_*.py`
+
+---
+
+## 🚀 Training
+
+Each script accepts the following arguments:
+
+| Argument              | Description |
+|-----------------------|-------------|
+| `--seed`              | Random seed for reproducibility |
+| `--path_data_lb`      | Path to labeled dataset (CSV) |
+| `--directory_path`    | Path to directory with unlabeled splits |
+| `--input_shape`       | Input dimensionality (e.g. 1720 or 500) |
+| `--type_s`            | Training subset type (`full` or `half`) |
+| `--n_epochs`          | Number of training epochs (default: 500) |
+| `--batch_size`        | Batch size (default: 128) |
+| `--lr`                | Learning rate (varies by method) |
+| `--mask_ratio`        | For MAE: proportion of masked features |
+| `--name_experiment`   | Identifier for the experiment |
+| `--project_wandb`     | (Optional) Weights & Biases project name |
+| `--path_save`         | Directory to save outputs |
+
+### Example Training Commands
+
+**GAN:**
 ```bash
-pip install -r requirements.txt
+python scripts/Gan_main_unlabeled.py \
+  --seed 42 \
+  --path_data_lb Datasets/annotated.csv \
+  --directory_path Splits/unlabeled/ \
+  --input_shape 1720 \
+  --type_s full \
+  --name_experiment gan_full_run \
+  --path_save checkpoints/
 ```
 
-## 🚀 Running the Scripts
-
-All scripts accept CLI arguments and are designed for flexible experimentation. Below are the commands to run each training pipeline.
-
-### 🔷 MAE (Masked Autoencoder)
-
-\`\`\`bash
-python scripts/mae_Reg_main_unlabeled.py \
-  --seed 155 \
-  --path_data_lb /path/to/your_dataset.csv \
-  --directory_path /path/to/Splits \
-  --input_shape 1720 \
-  --type_s full \
-  --n_epochs 1 \
-  --name_experiment Test_Un100 \
-  --path_save /path/to/output/mae_model/ \
-  --mask_ratio 0.75
-\`\`\`
-
-### 🔶 SR-GAN
-
-\`\`\`bash
-python scripts/Gan_main_unlabeled.py \
-  --seed 155 \
-  --path_data_lb /path/to/your_dataset.csv \
-  --directory_path /path/to/Splits \
-  --input_shape 1720 \
-  --type_s full \
-  --n_epochs 1 \
-  --name_experiment Test_Un100 \
-  --path_save /path/to/output/gan_model/
-\`\`\`
-
-### 🟩 RTM-AE (Labeled)
-
-\`\`\`bash
-python scripts/AE_RTM_main.py \
-  --seed 155 \
-  --path_data_lb /path/to/your_dataset.csv \
-  --directory_path /path/to/Splits \
-  --input_shape 1721 \
-  --type_s full \
-  --n_epochs 1 \
-  --batch_size 128 \
-  --lr 1e-3 \
-  --name_experiment Test_Un100 \
-  --project_wandb rtm_py_withScaler \
-  --path_save /path/to/output/ae_rtm/
-\`\`\`
-
-### 🟧 RTM-AE (Unlabeled)
-
-\`\`\`bash
+**AE-RTM:**
+```bash
 python scripts/AE_RTM_main_unlabeled.py \
-  --seed 155 \
-  --path_data_lb /path/to/your_dataset.csv \
-  --directory_path /path/to/Splits \
+  --seed 42 \
+  --path_data_lb Datasets/annotated.csv \
+  --directory_path Splits/unlabeled/ \
   --input_shape 1721 \
   --type_s full \
-  --n_epochs 1 \
-  --batch_size 128 \
-  --lr 1e-3 \
-  --name_experiment Test_Un100 \
-  --project_wandb rtm_py_withScaler \
-  --path_save /path/to/output/ae_rtm/
-\`\`\`
+  --name_experiment aertm_full_run \
+  --path_save checkpoints/
+```
 
-### 🟨 Multi-trait Model
-
-\`\`\`bash
+**Multi-Trait Supervised:**
+```bash
 python scripts/multi_main.py \
-  --seed 155 \
-  --path_data_lb /path/to/your_dataset.csv \
-  --directory_path /path/to/Splits \
+  --seed 42 \
+  --path_data_lb Datasets/annotated.csv \
+  --directory_path Splits/unlabeled/ \
   --input_shape 1720 \
   --type_s full \
-  --n_epochs 1 \
-  --name_experiment Test_Un100 \
-  --path_save /path/to/output/multi-trait_model/
-\`\`\`
+  --name_experiment multi_supervised \
+  --path_save checkpoints/
+```
 
-## 📊 CLI Argument Descriptions
+**MAE:**
+```bash
+python scripts/mae_unlabeled.py ...
+python scripts/MAE_downstreamReg.py ...
+```
 
-- \`--seed\`: Random seed for reproducibility
-- \`--path_data_lb\`: Path to the labeled dataset CSV file
-- \`--directory_path\`: Path to the folder containing split CSV files
-- \`--input_shape\`: Number of input features (e.g. 1720 or 1721)
-- \`--type_s\`: Training subset type (e.g. \`full\`)
-- \`--n_epochs\`: Number of training epochs
-- \`--batch_size\`: Batch size for training (if applicable)
-- \`--lr\`: Learning rate (if applicable)
-- \`--mask_ratio\`: Ratio of features to mask (for MAE only)
-- \`--name_experiment\`: Name/identifier for the current experiment
-- \`--project_wandb\`: Name of the Weights & Biases project (optional)
-- \`--path_save\`: Directory to save model outputs, logs, etc.
+---
 
-## 📂 Outputs
+## ✅ Evaluation
 
-Each script will:
-- Train the selected model architecture
-- Save experiment outputs under the provided \`--path_save\`
-- Optionally log training progress and metrics to Weights & Biases
+Run the corresponding Jupyter notebooks in `notebooks/` to evaluate the models and visualize results. Make sure to update paths to match your local setup.
+
+---
+
+## 💾 Pretrained Models
+
+Pretrained models can be found here:  
+👉 [GreenHySpectra Pretrained Checkpoints](https://huggingface.co/Avatarr05/Multi-trait_SSL/tree/main)
+
+---
+
+## 📣 Citation
+
+If you use this work, please cite the corresponding publication (link TBD).
+
+---
 
 ## 📄 License
 
