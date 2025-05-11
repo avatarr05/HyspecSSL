@@ -1,5 +1,3 @@
-# README
-
 # 🌱 GreenHySpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
 
 This repository provides training scripts and baseline experiments for semi-supervised learning on hyperspectral reflectance data. Implemented methods include:
