@@ -7,7 +7,7 @@ This repository provides training scripts and baseline experiments for semi-supe
 - Autoencoders with Radiative Transfer Models (RTM-AE)
 - Supervised Multi-trait learning framework
 
-The goal is to benchmark various semi-supervised learning (SSL) strategies for vegetation trait prediction using hyperspectral data.
+The goal is to benchmark various semi-supervised learning (SSL) strategies for plant trait prediction using hyperspectral data.
 
 ---
 
