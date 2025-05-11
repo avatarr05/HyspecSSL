@@ -126,11 +126,26 @@ python scripts/multi_main.py \
 ```
 
 **MAE:**
+The traits' prediction model with MAE is trained in two steps:
+**1. MAE pretaining:**
 ```bash
-python scripts/mae_unlabeled.py ...
-python scripts/MAE_downstreamReg.py ...
+python scripts/mae_unlabeled.py \
+  --seed 42 \
+  --directory_path Splits/unlabeled/ \
+  --input_shape 1720 \
+  --type_s full \
+  --name_experiment mae_full \
+  --path_save checkpoints/
 ```
-
+**2. MAE downstream task:**
+This requires the reference to the pre-trained MAE model
+```bash
+python scripts/MAE_downstreamReg.py \
+  --seed 42 \
+  --path_data_lb Datasets/annotated.csv \
+  --input_shape 1720 \
+  --type_s full
+```
 ---
 
 ## ✅ Evaluation
