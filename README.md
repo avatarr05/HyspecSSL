@@ -1,6 +1,6 @@
 # 🌱 GreenHySpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
 
-This repository provides training scripts and baseline experiments for semi-supervised learning on hyperspectral reflectance data. Implemented methods include:
+This repository provides training scripts and baseline experiments for semi- and self-supervised learning on hyperspectral reflectance data described in this paper (link TBD). Implemented methods include:
 
 - Masked Autoencoders (MAE)
 - Generative Adversarial Networks (SR-GAN)
