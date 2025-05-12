@@ -161,7 +161,7 @@ if __name__ == "__main__":
     file_paths = file_paths[:int(percentage_tr*len(file_paths))]
     
     ################ Lbeled ###############
-    db_lb_all = pd.read_csv(path_data_lb, low_memory=False)#.drop(['Unnamed: 0'], axis=1)   
+    db_lb_all = pd.read_csv(path_data_lb, low_memory=False).drop(['Unnamed: 0'], axis=1)   
     
     ### external
     groups = db_lb_all.groupby('dataset')
