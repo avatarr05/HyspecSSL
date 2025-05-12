@@ -150,12 +150,12 @@ if __name__ == "__main__":
     ################ Data ###############
     db_lb_all = pd.read_csv(path_data_lb, low_memory=False).drop(['Unnamed: 0'], axis=1)   
     
-    ### external
-    groups = db_lb_all.groupby('dataset')
+    # ### external
+    # groups = db_lb_all.groupby('dataset')
     
-    val_ext_idx = list(groups.get_group(32).index)+list(groups.get_group(3).index)+list(groups.get_group(50).index)
-    samples_val_ext = db_lb_all.loc[val_ext_idx,:]
-    db_lb_all.drop(val_ext_idx, inplace=True)
+    # val_ext_idx = list(groups.get_group(32).index)+list(groups.get_group(3).index)+list(groups.get_group(50).index)
+    # samples_val_ext = db_lb_all.loc[val_ext_idx,:]
+    # db_lb_all.drop(val_ext_idx, inplace=True)
     
     X_labeled, y_labeled = data_prep_db(db_lb_all, ls_tr)
     metadata = db_lb_all.iloc[:, :1]  # The metadata (dataset of origin)
