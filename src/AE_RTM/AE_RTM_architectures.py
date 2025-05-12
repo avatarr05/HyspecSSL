@@ -17,7 +17,7 @@ import torch
 import torch.nn as nn
 
 
-###### This is a modified version from  https://github.com/yihshe/ai-refined-rtm ###
+###### This is an extrended version of  https://github.com/yihshe/ai-refined-rtm ###
 
 class Discriminator(nn.Module):
     def __init__(self, input_shape, n_classes=1):
