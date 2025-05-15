@@ -158,7 +158,7 @@ Run the corresponding Jupyter notebooks in `notebooks/` to evaluate the models a
 ## 💾 Pretrained Models
 
 Pretrained models can be found here:  
-👉 [GreenHySpectra Pretrained Checkpoints](https://huggingface.co/Avatarr05/Multi-trait_SSL/tree/main)
+👉 [GreenHyperSpectra Pretrained Checkpoints](https://huggingface.co/Avatarr05/Multi-trait_SSL/tree/main)
 
 ---
 
