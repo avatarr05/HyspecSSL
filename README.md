@@ -1,4 +1,4 @@
-# 🌱 GreenHySpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
+# 🌱 GreenHyperSpectra: A Multi-Source Hyperspectral Dataset for Global Vegetation Trait Prediction
 
 This repository provides training scripts and baseline experiments for semi- and self-supervised learning on hyperspectral reflectance data described in this paper (link TBD). Implemented methods include:
 
@@ -14,7 +14,7 @@ The goal is to benchmark various semi-supervised learning (SSL) strategies for p
 ## 📂 Dataset
 
 Dataset available at:  
-👉 [Hugging Face – GreenHySpectra](https://huggingface.co/datasets/Avatarr05/GreenHySpectra)
+👉 [Hugging Face – GreenHyperSpectra](https://huggingface.co/datasets/Avatarr05/GreenHyperSpectra)
 
 Place the downloaded dataset under `Datasets/`.
 
@@ -29,8 +29,8 @@ Tested on:
 To set up the environment:
 
 ```bash
-conda create -n greenhyspectra python=3.8.2
-conda activate greenhyspectra
+conda create -n greenhyperspectra python=3.8.2
+conda activate greenhyperspectra
 pip install torch==1.8.1+cu111 torchvision==0.9.1+cu111 torchaudio==0.8.1 -f https://download.pytorch.org/whl/torch_stable.html
 pip install -r requirements.txt
 ```
@@ -80,7 +80,7 @@ Each script accepts the following arguments:
 | `--directory_path`    | Path to directory with unlabeled splits |
 | `--input_shape`       | Input dimensionality (e.g. 1720 or 500) |
 | `--type_s`            | Training subset type (`full` or `half`) |
-| `--n_epochs`          | Number of training epochs (default: 500) |
+| `--n_epochs`          | Number of training epochs (default: 300) |
 | `--batch_size`        | Batch size (default: 128) |
 | `--lr`                | Learning rate (varies by method) |
 | `--mask_ratio`        | For MAE: proportion of masked features |
@@ -95,7 +95,7 @@ Each script accepts the following arguments:
 python scripts/Gan_main_unlabeled.py \
   --seed 42 \
   --path_data_lb Datasets/annotated.csv \
-  --directory_path Splits/unlabeled/ \
+  --directory_path Splits/ \
   --input_shape 1720 \
   --type_s full \
   --name_experiment gan_full_run \
@@ -107,7 +107,7 @@ python scripts/Gan_main_unlabeled.py \
 python scripts/AE_RTM_main_unlabeled.py \
   --seed 42 \
   --path_data_lb Datasets/annotated.csv \
-  --directory_path Splits/unlabeled/ \
+  --directory_path Splits/ \
   --input_shape 1721 \
   --type_s full \
   --name_experiment aertm_full_run \
@@ -119,7 +119,7 @@ python scripts/AE_RTM_main_unlabeled.py \
 python scripts/multi_main.py \
   --seed 42 \
   --path_data_lb Datasets/annotated.csv \
-  --directory_path Splits/unlabeled/ \
+  --directory_path Splits/ \
   --input_shape 1720 \
   --type_s full \
   --name_experiment multi_supervised \
@@ -132,7 +132,7 @@ The traits' prediction model with MAE is trained in two steps:
 ```bash
 python scripts/mae_unlabeled.py \
   --seed 42 \
-  --directory_path Splits/unlabeled/ \
+  --directory_path Splits/ \
   --input_shape 1720 \
   --type_s full \
   --name_experiment mae_full \
