@@ -170,4 +170,4 @@ If you use this work, please cite the corresponding publication (link TBD).
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the **CC BY-NC 4.0 License**. See the [LICENSE](LICENSE) file for more information.
