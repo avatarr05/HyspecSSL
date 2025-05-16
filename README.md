@@ -17,7 +17,7 @@ Dataset available at:
 👉 [Hugging Face – GreenHyperSpectra](https://huggingface.co/datasets/Avatarr05/GreenHyperSpectra)
 
 Place the downloaded complete dataset under `Datasets/`. 
-1. You can run `scripts/Split_data.py` to download the complete directories of the dataset + create unlabeled splits for the experiements
+1. You can run `scripts/Split_data.py` to download the complete directories of the dataset + create unlabeled splits for the experiements (for this option intall git lfs [sudo apt-get install git-lfs, git lfs install])
 2. You can check `notebooks/DataLoad_chunks.ipynb`
 3. Check the data with Hugging Face datasets library, as follows:
 ```
