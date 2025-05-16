@@ -61,10 +61,10 @@ pip install -r requirements.txt
 
 ```
 HyspecSSL/
-├── Datasets/              # Contains labeled and unlabeled hyperspectral data
+├── Datasets/              # Contains labeled and unlabeled hyperspectral data: To be downloaded from Hugging Face
 ├── notebooks/             # Evaluation and visualization notebooks
 ├── scripts/               # Training scripts for all models
-├── Splits/                # Contains train/test splits of unlabeled data
+├── Splits/                # Contains the stratfied splits of unlabeled data: to be created with scripts/Split_data.py
 ├── src/                   # Supporting modules/utilities
 ├── README.md
 └── requirements.txt
@@ -73,13 +73,13 @@ HyspecSSL/
 ### `scripts/` includes:
 
 - **(a) Sensitivity Analysis**:  
-  `*_variation_UnLb.py`, `*_variation_Lb.py`, etc.
+  `*_variation_UnLb.py`, `*_variation_Lb.py`, etc.  # Train benchmark models with variable labled (Lb) and unlabeled (UnLb) data samples
 
 - **(b) Full-range Trait Prediction**:  
   `Gan_main_unlabeled.py`, `AE_RTM_main_unlabeled.py`, `multi_main.py`
 
 - **(c) Half-range Trait Prediction**:  
-  Same as above with `--type_s 'half'`
+  Same as above with `--type_s 'half'` and `--input_shape 500`
 
 - **(d) Out-of-Distribution (OOD) Evaluation**:  
   `*_main_unlabeled_TransCV.py`, `multi_main_Trans.py`
