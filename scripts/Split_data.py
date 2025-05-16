@@ -13,7 +13,7 @@ sys.path.insert(0, project_root)
 
 from src.utils_data import *
 
-dataset_repo_url = "https://huggingface.co/datasets/Avatarr05/GreenHySpectra"
+dataset_repo_url = "https://huggingface.co/datasets/Avatarr05/GreenHyperSpectra"
 
 directory_path = os.path.join(project_root, "Splits")
 directory_path_Ds = os.path.join(project_root, "Datasets")
