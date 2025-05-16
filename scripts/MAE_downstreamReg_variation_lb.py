@@ -73,6 +73,10 @@ if __name__ == "__main__":
         print(torch.cuda.memory_summary())
         ##################
 
-        ######### Validation ###
-        mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='LP_{}'.format(percentage_tr))
-        mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='FT_{}'.format(percentage_tr))
+        # ######### Validation ###
+        # mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='LP_{}'.format(percentage_tr))
+        # mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='FT_{}'.format(percentage_tr))
+        
+      ######### Validation ###
+        mean_metrics, std_metrics = run_consistent_experiment(path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='LP_{}'.format(percentage_tr), checkpoint_dir_mae=path_save)
+        mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=percentage_tr, type_sp=type_s, n_bands=input_shape,  save=True, name='FT_{}'.format(percentage_tr), checkpoint_dir_mae=path_save)
