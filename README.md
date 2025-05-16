@@ -16,7 +16,27 @@ The goal is to benchmark various semi- and self- supervised learning strategies 
 Dataset available at:  
 👉 [Hugging Face – GreenHyperSpectra](https://huggingface.co/datasets/Avatarr05/GreenHyperSpectra)
 
-Place the downloaded dataset under `Datasets/`.
+Place the downloaded complete dataset under `Datasets/`. You can run `scripts/Split_data.py`
+
+```
+### Check the data with Hugging Face datasets library ###
+
+from datasets import load_dataset
+
+### labeled_all ###
+# Login using e.g. `huggingface-cli login` to access this dataset
+ds = load_dataset("Avatarr05/GreenHyperSpectra", "labeled_all")
+
+df = ds['train'].to_pandas().drop(['Unnamed: 0'], axis=1)
+display(df.head())
+
+### labeled_splits: train ###
+train_dataset = load_dataset("Avatarr05/GreenHyperSpectra", 'labeled_splits', split="train")
+
+train_dataset = train_dataset.to_pandas().drop(['Unnamed: 0'], axis=1)
+display(df.head())
+
+```
 
 ---
 
