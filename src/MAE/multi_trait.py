@@ -191,11 +191,51 @@ class LatentRegressionModel(nn.Module):
 #########################################
 # Downstream Regression Pipeline
 #########################################
+# def load_model(checkpoint_dir_mae, type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75 ):
+#     # Load pretrained MAE model
+#     path_model_mae = os.path.join(checkpoint_dir_mae, 'best_model.h5')
 
+#     settings_dict_mae = {
+#         'learning_rate': 1e-3,
+#         'weight_decay': 0,
+#         'load_model_path': path_model_mae, #path_model_mae load_model_path
+#         'should_save_models': True,
+#         'skip_completed_experiment': True,
+#         'number_of_data_workers': 0,
+#         'w_loss' : 1,
+        
+#         'mask_ratio':mask_ratio,
+#         'n_bands': n_bands,
+#         'type':type_sp,
+#         'seq_size': seq_size,
+#         'in_chans': 1,
+#         'embed_dim': 128,
+#         'depth': d,
+#         'num_heads': h,
+#         'decoder_embed_dim': 128,
+#         'decoder_depth': 6,
+#         'decoder_num_heads': 4,
+#         'mlp_ratio': 4.0,
+#         'norm_layer': nn.LayerNorm,
+#         'cls_token': False,
+#         'device': torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#     }
 
-def load_model(checkpoint_dir_mae, type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75 ):
-    # Load pretrained MAE model
-    path_model_mae = os.path.join(checkpoint_dir_mae, 'best_model.h5')
+#     sets = Settings()
+#     sets.update_from_dict(settings_dict_mae)
+#     trainer = Trainer(sets)
+#     trainer.model_setup()
+#     trainer.model = torch.load(path_model_mae)
+#     return trainer
+
+def load_model(type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75, checkpoint_dir_mae=None, HF=False, repo_id=None, model_id=None):
+    if(HF):
+        path_model_mae = hf_hub_download(
+            repo_id=repo_id,
+            filename=os.path.join(model_id, 'best_model.h5'))
+    else:
+        # Load pretrained MAE model
+        path_model_mae = os.path.join(checkpoint_dir_mae, 'best_model.h5')
 
     settings_dict_mae = {
         'learning_rate': 1e-3,
@@ -231,12 +271,23 @@ def load_model(checkpoint_dir_mae, type_sp='full', n_bands=1720, seq_size=20,d=1
     return trainer
 
 
-def run_consistent_experiment(checkpoint_dir_mae, path_data_lb, seeds=[155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp='full', n_bands=1720,  save=False, name=''):
+# def run_consistent_experiment(checkpoint_dir_mae, path_data_lb, seeds=[155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp='full', n_bands=1720,  save=False, name=''):
+#     ls_tr = ["cab", "cw", "cm", "LAI", "cp", "cbc", "car", "anth"]
+#     batch_size = 256
+
+#     # # Load pretrained MAE model
+#     trainer = load_model(checkpoint_dir_mae, type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75)
+#     pretrained_model = trainer.model
+
+def run_consistent_experiment(path_data_lb, seeds=[155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp='full', n_bands=1720,  save=False, name='',checkpoint_dir_mae=None, HF=False, repo_id=None, model_id=None):
     ls_tr = ["cab", "cw", "cm", "LAI", "cp", "cbc", "car", "anth"]
     batch_size = 256
-
-    # # Load pretrained MAE model
-    trainer = load_model(checkpoint_dir_mae, type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75)
+    
+    if(HF):
+        trainer = load_model(type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75, HF=True, repo_id=repo_id, model_id=model_id)
+    else:
+        # # Load pretrained MAE model
+        trainer = load_model(type_sp='full', n_bands=1720, seq_size=20,d=10, h=16,mask_ratio=0.75, checkpoint_dir_mae=checkpoint_dir_mae)
     pretrained_model = trainer.model
 
     eval_scores = {}
