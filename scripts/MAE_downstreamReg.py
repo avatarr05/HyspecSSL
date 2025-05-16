@@ -67,6 +67,11 @@ if __name__ == "__main__":
 
     seed_all(seed=seed) ###155
 
+    # ######### Validation ###
+    # mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='LP')
+    # mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='FT')
+
     ######### Validation ###
-    mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='LP')
-    mean_metrics, std_metrics = run_consistent_experiment(path_save, path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='FT')
+    mean_metrics, std_metrics = run_consistent_experiment(path_data_lb, [155, 381, 187], fine_tune=False, n_epochs = 200, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='LP', checkpoint_dir_mae=path_save)
+    mean_metrics, std_metrics = run_consistent_experiment(path_data_lb, [155, 381, 187], fine_tune=True, n_epochs = 80, percentage_tr=1, type_sp=type_s, n_bands=input_shape,  save=True, name='FT', checkpoint_dir_mae=path_save)
+
