@@ -169,16 +169,16 @@ python scripts/MAE_downstreamReg.py \
 ```
 ---
 
-## ✅ Evaluation
-
-Run the corresponding Jupyter notebooks in `notebooks/` to evaluate the models and visualize results. Make sure to update paths to match your local setup.
-
----
-
 ## 💾 Pretrained Models
 
 Pretrained models can be found here:  
 👉 [GreenHyperSpectra Pretrained Checkpoints](https://huggingface.co/Avatarr05/Multi-trait_SSL/tree/main)
+
+---
+
+## ✅ Evaluation
+
+Run the corresponding Jupyter notebooks in `notebooks/` to evaluate the models and visualize results. Make sure to update paths to match your local setup or use data from Hugging Face, both options are included in the notebooks.
 
 ---
 
