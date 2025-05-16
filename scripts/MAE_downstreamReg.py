@@ -1,3 +1,11 @@
+import sys
+import os
+import warnings
+warnings.filterwarnings('ignore')  # ignore warnings, like ZeroDivision
+
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.insert(0, project_root)
+
 from src.transformation_utils import *
 from src.utils_all import *
 from src.utils_data import *
